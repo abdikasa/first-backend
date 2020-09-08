@@ -47,7 +47,7 @@ app.get("/api/notes/:id", (req, res) => {
 });
 
 app.delete("/api/notes/:id", (req, res) => {
-  const id = Number(req.paras.id);
+  const id = Number(req.params.id);
   notes = notes.filter((note) => note.id !== id);
   //status code 204 no content and return no data with the response
   res.status(204).end();
