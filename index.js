@@ -46,6 +46,12 @@ app.get("/api/notes/:id", (req, res) => {
   else response.status(404).end();
 });
 
+app.delete("/api/notes/:id", (rq, res) => {
+  const id = Number(req.paras.id);
+  notes = notes.filter((note) => note.id !== id);
+  res.status(204).end();
+});
+
 const PORT = 3002;
 app.listen(PORT),
   () => {
