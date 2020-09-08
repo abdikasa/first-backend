@@ -1,6 +1,9 @@
 const express = require("express");
 const { response } = require("express");
 const app = express();
+//Need this otherwise body will be undefined.
+//Takes the json data from request, transforms it to JS object, attch it to the body, before route is called.
+app.use(express.json());
 
 let notes = [
   {
@@ -22,6 +25,13 @@ let notes = [
     important: true,
   },
 ];
+
+//POST: send all information for the new note inside the request body in json format.
+app.post("/api/notes", (req, res) => {
+  const note = req.body;
+  console.log(note);
+  res.json(note);
+});
 
 //on root, show this
 app.get("/", (req, res) => {
