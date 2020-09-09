@@ -28,8 +28,15 @@ let notes = [
 
 //POST: send all information for the new note inside the request body in json format.
 app.post("/api/notes", (req, res) => {
+  //first assign a unique id.
+  const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 0;
+
+  //assign body of the code
   const note = req.body;
-  console.log(note);
+
+  note.id = maxId + 1;
+  notes = notes.concat(note);
+
   res.json(note);
 });
 
