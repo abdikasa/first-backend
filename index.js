@@ -26,17 +26,31 @@ let notes = [
   },
 ];
 
+const generateID = () => {
+  const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 0;
+  return maxId + 1;
+};
+
 //POST: send all information for the new note inside the request body in json format.
 app.post("/api/notes", (req, res) => {
-  //first assign a unique id.
-  const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 0;
-
   //assign body of the code
-  const note = req.body;
+  const body = req.body;
 
-  note.id = maxId + 1;
+  //check if content is empty
+  if (!body.content) {
+    return response.status(400).json({
+      error: "content-missing",
+    });
+  }
+
+  const note = {
+    content: body.content,
+    important: body.important || false,
+    date: new Date(),
+    id: generateID(),
+  };
+
   notes = notes.concat(note);
-
   res.json(note);
 });
 
